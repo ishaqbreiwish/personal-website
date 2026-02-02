@@ -1,0 +1,11 @@
+baseURL = "https://ishaqbreiwish.com/"
+languageCode = "en-us"
+title = "Ishaq Breiwish"
+
+[params]
+  description = "Backend and systems engineering projects."
+
+  [markup]
+    [markup.highlight]
+      style = "monokai"
+      lineNos = true

@@ -1,0 +1,39 @@
+{{ define "main" }}
+
+<div class="list-page">
+    <h1>{{ .Title }}/</h1>
+
+    {{ if .Sections }} {{ range .Sections }}
+    <div style="margin-top: 1.5rem">
+        <h2 style="margin-top: 0">{{ .Title }}/</h2>
+        {{ if .Pages }}
+        <ul class="projects-list">
+            {{ range .Pages }}
+            <li>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                <span class="date">{{ .Date.Format "Jan 2006" }}</span>
+            </li>
+            {{ end }}
+        </ul>
+        {{ else }}
+        <p style="color: var(--text-muted); font-size: 0.85rem">empty</p>
+        {{ end }}
+    </div>
+    {{ end }} {{ end }} {{ $directPages := where .Pages "Kind" "page" }} {{ if
+    $directPages }}
+    <ul class="projects-list" style="margin-top: 1rem">
+        {{ range $directPages }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <span class="date">{{ .Date.Format "Jan 2006" }}</span>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }} {{ if and (not .Sections) (not .Pages) }}
+    <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.85rem">
+        nothing here yet
+    </p>
+    {{ end }}
+</div>
+
+{{ end }}

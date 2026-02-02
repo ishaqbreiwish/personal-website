@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#0f1219" />
+        <title>
+            photos | Ishaq Breiwish
+        </title>
+        <meta name="description" content="Backend and systems engineering projects." />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/style.css" />
+        <script>
+            
+            (function () {
+                const theme =
+                    localStorage.getItem("theme") ||
+                    (window.matchMedia("(prefers-color-scheme: dark)").matches
+                        ? "dark"
+                        : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+            })();
+        </script>
+    </head>
+    <body>
+        <button class="theme-toggle" id="theme-toggle">light</button>
+
+        <header>
+            <div class="terminal-nav">
+                <span class="terminal-prompt">
+                    <span class="user">ishaq</span><span class="symbol">@</span
+                    ><span class="host">web</span><span class="symbol">:</span
+                    ><span class="path"
+                        >~/photos/photos</span
+                    ><span class="symbol">$</span>
+                </span>
+            </div>
+            <nav>
+                <a href="/">~</a>
+                <a href="/projects/">projects/</a>
+                <a href="/blog/">blog/</a>
+            </nav>
+        </header>
+
+        <main>
+
+<div class="list-page">
+    <h1>photos/</h1>
+
+      
+    <ul class="projects-list">
+        
+        <li>
+            <a href="/photos/setup/">setup</a>
+            <span class="date">Jan 0001</span>
+        </li>
+        
+    </ul>
+     
+</div>
+
+</main>
+
+        <footer>
+            <p>2026</p>
+        </footer>
+
+        <script src="/js/terminal.js"></script>
+    </body>
+</html>
