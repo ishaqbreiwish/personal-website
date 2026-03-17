@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ishaq Breiwish</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Ishaq Breiwish</description>
+    <title>Personal on Ishaq Breiwish</title>
+    <link>http://localhost:1313/tags/personal/</link>
+    <description>Recent content in Personal on Ishaq Breiwish</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 17 Mar 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/personal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Optimizing the fun of Programming</title>
       <link>http://localhost:1313/projects/risa-16/</link>
@@ -21,27 +21,6 @@
       <pubDate>Tue, 17 Mar 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/builder/</guid>
       <description>&lt;p&gt;“What I cannot create, I do not understand” - Richard Feynman&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve always been a builder. Whether it was Lego sets or writing stories, there’s something about creating that has always pulled me in. For the better part of the last decade my primary tool for building has been programming. I remember trying to teach myself Unity in 5th grade to finally make my dream game, or even shoving a Python predictor into a probability paper just so I’d have an excuse to code.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Introduction</title>
-      <link>http://localhost:1313/blog/learning_c&#43;&#43;/introduction/</link>
-      <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/learning_c&#43;&#43;/introduction/</guid>
-      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;&#xA;&lt;p&gt;Would love to learn C++. Will document things I think are important, hopefully, probably.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Namespaces</title>
-      <link>http://localhost:1313/blog/learning_c&#43;&#43;/part1/</link>
-      <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/learning_c&#43;&#43;/part1/</guid>
-      <description>&lt;h1 id=&#34;what-are-namespaces&#34;&gt;What are Namespaces?&lt;/h1&gt;</description>
-    </item>
-    <item>
-      <title>Introduction</title>
-      <link>http://localhost:1313/blog/risa-16-blog/introduction/</link>
-      <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/risa-16-blog/introduction/</guid>
-      <description></description>
     </item>
   </channel>
 </rss>

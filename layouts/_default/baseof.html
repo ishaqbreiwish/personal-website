@@ -21,6 +21,10 @@
 <body>
     <button class="theme-toggle" id="theme-toggle">light</button>
 
+    {{ $currentSection := .Section }}
+    {{ $parentTitle := "" }}
+    {{ with .Parent }}{{ $parentTitle = .Title }}{{ end }}
+
     <div class="page-wrapper">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -34,8 +38,8 @@
                     <a href="/">home</a>
                 </div>
 
-                <!-- Projects -->
-                <div class="folder open">
+                <!-- Projects - open if we're in projects section -->
+                <div class="folder{{ if eq $currentSection "projects" }} open{{ end }}">
                     <div class="folder-header">
                         <span class="toggle">▸</span>
                         <span class="folder-name">projects/</span>
@@ -43,7 +47,7 @@
                     <div class="folder-contents">
                         {{ $projectSection := .Site.GetPage "section" "projects" }}
                         {{ range $projectSection.Sections }}
-                        <div class="folder{{ if eq $.Section "projects" }} open{{ end }}">
+                        <div class="folder{{ if and (eq $currentSection "projects") (eq $parentTitle .Title) }} open{{ end }}">
                             <div class="folder-header">
                                 <span class="toggle">▸</span>
                                 <span class="folder-name">{{ .Title }}/</span>
@@ -58,11 +62,17 @@
                             </div>
                         </div>
                         {{ end }}
+                        {{ range $projectSection.RegularPages }}
+                        <div class="file">
+                            <span class="file-icon">-</span>
+                            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        </div>
+                        {{ end }}
                     </div>
                 </div>
 
-                <!-- Blog -->
-                <div class="folder">
+                <!-- Blog - open if we're in blog section -->
+                <div class="folder{{ if eq $currentSection "blog" }} open{{ end }}">
                     <div class="folder-header">
                         <span class="toggle">▸</span>
                         <span class="folder-name">blog/</span>
@@ -70,7 +80,7 @@
                     <div class="folder-contents">
                         {{ $blogSection := .Site.GetPage "section" "blog" }}
                         {{ range $blogSection.Sections }}
-                        <div class="folder">
+                        <div class="folder{{ if and (eq $currentSection "blog") (eq $parentTitle .Title) }} open{{ end }}">
                             <div class="folder-header">
                                 <span class="toggle">▸</span>
                                 <span class="folder-name">{{ .Title }}/</span>
@@ -85,7 +95,7 @@
                             </div>
                         </div>
                         {{ end }}
-                        {{ range where $blogSection.Pages "Kind" "page" }}
+                        {{ range $blogSection.RegularPages }}
                         <div class="file">
                             <span class="file-icon">-</span>
                             <a href="{{ .RelPermalink }}">{{ .Title }}</a>

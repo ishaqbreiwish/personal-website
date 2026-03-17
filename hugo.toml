@@ -5,7 +5,7 @@ title = "Ishaq Breiwish"
 [params]
   description = "Backend and systems engineering projects."
 
-  [markup]
-    [markup.highlight]
-      style = "monokai"
-      lineNos = true
+[markup]
+  [markup.highlight]
+    style = "monokai"
+    lineNos = false
