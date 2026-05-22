@@ -1,116 +1,71 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.Language.Locale }}" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f1219">
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-    <meta name="description" content="{{ .Site.Params.description }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <script>
-        (function() {
-            const theme = localStorage.getItem('theme') ||
-                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
 <body>
-    <button class="theme-toggle" id="theme-toggle">light</button>
+  <div class="layout">
+    {{ partial "sidebar.html" . }}
+    <main class="content">
+      {{ block "main" . }}{{ end }}
+    </main>
+  </div>
 
-    {{ $currentSection := .Section }}
-    {{ $parentTitle := "" }}
-    {{ with .Parent }}{{ $parentTitle = .Title }}{{ end }}
-
-    <div class="page-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <a href="/" class="sidebar-title">ishaq</a>
-                <span class="sidebar-prompt">~/{{ .Section | default "" }}</span>
-            </div>
-
-            <div class="sidebar-nav tree">
-                <div class="file" style="margin-bottom: 0.5rem;">
-                    <span class="file-icon">~</span>
-                    <a href="/">home</a>
-                </div>
-
-                <!-- Projects - open if we're in projects section -->
-                <div class="folder{{ if eq $currentSection "projects" }} open{{ end }}">
-                    <div class="folder-header">
-                        <span class="toggle">▸</span>
-                        <span class="folder-name">projects/</span>
-                    </div>
-                    <div class="folder-contents">
-                        {{ $projectSection := .Site.GetPage "section" "projects" }}
-                        {{ range $projectSection.Sections }}
-                        <div class="folder{{ if and (eq $currentSection "projects") (eq $parentTitle .Title) }} open{{ end }}">
-                            <div class="folder-header">
-                                <span class="toggle">▸</span>
-                                <span class="folder-name">{{ .Title }}/</span>
-                            </div>
-                            <div class="folder-contents">
-                                {{ range .Pages }}
-                                <div class="file">
-                                    <span class="file-icon">-</span>
-                                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                                </div>
-                                {{ end }}
-                            </div>
-                        </div>
-                        {{ end }}
-                        {{ range $projectSection.RegularPages }}
-                        <div class="file">
-                            <span class="file-icon">-</span>
-                            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                        </div>
-                        {{ end }}
-                    </div>
-                </div>
-
-                <!-- Blog - open if we're in blog section -->
-                <div class="folder{{ if eq $currentSection "blog" }} open{{ end }}">
-                    <div class="folder-header">
-                        <span class="toggle">▸</span>
-                        <span class="folder-name">blog/</span>
-                    </div>
-                    <div class="folder-contents">
-                        {{ $blogSection := .Site.GetPage "section" "blog" }}
-                        {{ range $blogSection.Sections }}
-                        <div class="folder{{ if and (eq $currentSection "blog") (eq $parentTitle .Title) }} open{{ end }}">
-                            <div class="folder-header">
-                                <span class="toggle">▸</span>
-                                <span class="folder-name">{{ .Title }}/</span>
-                            </div>
-                            <div class="folder-contents">
-                                {{ range .Pages }}
-                                <div class="file">
-                                    <span class="file-icon">-</span>
-                                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                                </div>
-                                {{ end }}
-                            </div>
-                        </div>
-                        {{ end }}
-                        {{ range $blogSection.RegularPages }}
-                        <div class="file">
-                            <span class="file-icon">-</span>
-                            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                        </div>
-                        {{ end }}
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <main class="content-area">
-            {{ block "main" . }}{{ end }}
-        </main>
-    </div>
-
-    <script src="/js/terminal.js"></script>
+  <!-- Graph data: available on every page for the mini sidebar graph -->
+  <script>
+  window.GRAPH_DATA = {
+    current: {{ .RelPermalink | jsonify }},
+    nodes: [
+      { id: "/", label: "home", url: "/", type: "root" }
+      {{- range .Site.Sections }},
+      { id: {{ .RelPermalink | jsonify }}, label: {{ .Title | jsonify }}, url: {{ .RelPermalink | jsonify }}, type: "section" }
+      {{- range .Pages }},
+      { id: {{ .RelPermalink | jsonify }}, label: {{ .Title | jsonify }}, url: {{ .RelPermalink | jsonify }}, type: "page", section: {{ .Section | jsonify }}, tags: [{{ range .Params.tags }}{{ . | jsonify }},{{ end }}] }
+      {{- end }}
+      {{- end }}
+    ],
+    links: []
+  };
+  {{ range .Site.Sections }}
+  GRAPH_DATA.links.push({ source: "/", target: {{ .RelPermalink | jsonify }} });
+  {{ range .Pages }}
+  GRAPH_DATA.links.push({ source: {{ .FirstSection.RelPermalink | jsonify }}, target: {{ .RelPermalink | jsonify }} });
+  {{ end }}
+  {{ end }}
+  /* Tag cross-links */
+  (function() {
+    var tm = {};
+    GRAPH_DATA.nodes.forEach(function(n) {
+      if (n.tags) n.tags.forEach(function(t) {
+        if (!tm[t]) tm[t] = [];
+        tm[t].push(n.id);
+      });
+    });
+    Object.keys(tm).forEach(function(t) {
+      var ids = tm[t];
+      for (var i = 0; i < ids.length; i++)
+        for (var j = i + 1; j < ids.length; j++)
+          GRAPH_DATA.links.push({ source: ids[i], target: ids[j], type: "tag" });
+    });
+  })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/graph.js"></script>
+  {{ block "scripts" . }}{{ end }}
 </body>
 </html>

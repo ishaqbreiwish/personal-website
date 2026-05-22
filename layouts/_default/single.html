@@ -1,10 +1,11 @@
 {{ define "main" }}
 
 <article>
-    <h1>{{ .Title }}</h1>
-    <p class="meta">{{ .Date.Format "January 2, 2006" }}</p>
-
+  <time class="article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+  <h1>{{ .Title }}</h1>
+  <div class="article-body">
     {{ .Content }}
+  </div>
 </article>
 
 {{ end }}

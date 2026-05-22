@@ -1,17 +1,64 @@
 {{ define "main" }}
 
-<section class="intro">
-    <p class="command"><span>$</span> whoami</p>
-    <p class="output">ishaq breiwish<span class="cursor"></span></p>
-    <p class="bio">
-        Systems engineer. I build infrastructure and systems software across
-        networking, databases, compilers, and operating systems. Mostly Rust and
-        C++.
-    </p>
-    <div class="links">
-        <a href="https://github.com/ishaqbreiwish" target="_blank">github</a>
-        <a href="mailto:ishaq.breiwish@gmail.com">email</a>
-    </div>
+<section class="home-hero">
+  <h1 class="home-name">Ishaq Breiwish</h1>
+  <p class="home-role">Software Engineer | Intern @ Google | CS @ Georgia Tech</p>
+  <p class="home-bio">
+    I build infrastructure and systems in Rust and C++
+  </p>
+  <div class="home-links">
+    <a href="https://github.com/ishaqbreiwish" target="_blank" rel="noopener">GitHub</a>
+    <a href="mailto:ishaq.breiwish@gmail.com">Email</a>
+  </div>
 </section>
+
+{{ $blog := .Site.GetPage "section" "blog" }}
+{{ $projects := .Site.GetPage "section" "projects" }}
+
+<div class="home-sections">
+  <div>
+    <div class="home-section-label">
+      <span>Writing</span>
+      {{ with $blog }}<a href="{{ .RelPermalink }}">All →</a>{{ end }}
+    </div>
+    {{ with $blog }}
+    {{ $posts := .RegularPages | first 5 }}
+    {{ if $posts }}
+    <ul class="feed-list">
+      {{ range $posts }}
+      <li class="feed-item">
+        <time class="feed-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        <a href="{{ .RelPermalink }}" class="feed-title">{{ .Title }}</a>
+      </li>
+      {{ end }}
+    </ul>
+    {{ else }}
+    <p class="feed-empty">Nothing yet.</p>
+    {{ end }}
+    {{ end }}
+  </div>
+
+  <div>
+    <div class="home-section-label">
+      <span>Projects</span>
+      {{ with $projects }}<a href="{{ .RelPermalink }}">All →</a>{{ end }}
+    </div>
+    {{ with $projects }}
+    {{ $pages := .Pages | first 5 }}
+    {{ if $pages }}
+    <ul class="feed-list">
+      {{ range $pages }}
+      <li class="feed-item">
+        <time class="feed-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        <a href="{{ .RelPermalink }}" class="feed-title">{{ .Title }}</a>
+      </li>
+      {{ end }}
+    </ul>
+    {{ else }}
+    <p class="feed-empty">Nothing yet.</p>
+    {{ end }}
+    {{ end }}
+  </div>
+</div>
 
 {{ end }}

@@ -1,0 +1,78 @@
+{{ $section := .Section }}
+{{ $url := .RelPermalink }}
+
+<aside class="sidebar">
+  <a href="/" class="sidebar-brand">ishaq breiwish</a>
+
+  <nav class="nav-tree">
+    <div class="nav-item">
+      <a href="/" {{ if .IsHome }}class="active"{{ end }}>home</a>
+    </div>
+
+    {{ $projects := .Site.GetPage "section" "projects" }}
+    {{ $blog := .Site.GetPage "section" "blog" }}
+
+    {{ with $projects }}
+    <div class="nav-folder{{ if eq $section "projects" }} open{{ end }}">
+      <div class="nav-folder-header">
+        <span class="nf-arrow">▸</span>
+        <span>projects</span>
+      </div>
+      <div class="nav-folder-children">
+        {{ range .Sections }}
+        <div class="nav-folder{{ if and (eq $section "projects") (eq $.Parent.Title .Title) }} open{{ end }}">
+          <div class="nav-folder-header">
+            <span class="nf-arrow">▸</span>
+            <span>{{ .Title }}</span>
+          </div>
+          <div class="nav-folder-children">
+            {{ range .Pages }}
+            <div class="nav-item">
+              <a href="{{ .RelPermalink }}" {{ if eq $url .RelPermalink }}class="active"{{ end }}>{{ .Title }}</a>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        {{ range .RegularPages }}
+        <div class="nav-item">
+          <a href="{{ .RelPermalink }}" {{ if eq $url .RelPermalink }}class="active"{{ end }}>{{ .Title }}</a>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    {{ with $blog }}
+    <div class="nav-folder{{ if eq $section "blog" }} open{{ end }}">
+      <div class="nav-folder-header">
+        <span class="nf-arrow">▸</span>
+        <span>blog</span>
+      </div>
+      <div class="nav-folder-children">
+        {{ range .RegularPages }}
+        <div class="nav-item">
+          <a href="{{ .RelPermalink }}" {{ if eq $url .RelPermalink }}class="active"{{ end }}>{{ .Title }}</a>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+  </nav>
+
+  <!-- Mini knowledge graph -->
+  <div class="sidebar-graph">
+    <span class="sidebar-graph-label">connections</span>
+    <svg id="mini-graph-svg"></svg>
+  </div>
+
+  <!-- Mobile simplified nav -->
+  <nav class="nav-mobile">
+    <a href="/projects">projects</a>
+    <a href="/blog">blog</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <button class="theme-toggle" id="theme-toggle">light</button>
+  </div>
+</aside>
